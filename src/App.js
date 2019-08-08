@@ -41,7 +41,7 @@ class App extends Component {
   render() {
     const { msgs, connectStatus } = this.state;
     return (
-      <div className="wrapper">
+      <>
         <Head
           status={connectStatus}
         />
@@ -52,7 +52,7 @@ class App extends Component {
           ws={this.ws}
         />
         <Foot />
-      </div>
+      </>
     );
   }
 }
