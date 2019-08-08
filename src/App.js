@@ -1,24 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
+
+import Head from './components/Head';
+import Body from './components/Body';
+import Foot from './components/Foot';
 import './App.css';
 
 function App() {
+  const ws = 'ws://st-chat.shas.tel';
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="wrapper">
+      <Head />
+      <Body
+        ws={ws}
+        isLogin={true}
+        user="test"
+      />
+      <Foot />
     </div>
   );
 }
