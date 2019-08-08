@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Messages from './Messages';
+import MessageForm from './MessageForm';
 
 class Body extends Component {
   constructor(props) {
@@ -12,28 +13,18 @@ class Body extends Component {
     };
   }
 
-  componentDidMount() {
-    // const ws = new WebSocket(this.props.ws);
-    // // ws.onopen = () => (
-    // //   this.setState({
-    // //     connectStatus: 
-    // //   })
-    // // )
-    // ws.onmessage = (message) => (
-    //   this.setState({
-    //     messages: [...this.state.messages, JSON.parse(message.data)],
-    //   })
-    // )
-  }
-
-  
   render() {
     const { isLogin } = this.state;
     if (isLogin === true) {
       return (
         <>
-          <Messages />
+          <Messages
+            msgs={this.props.msgs}
+          />
           <h2>login</h2>
+          <MessageForm
+            ws={this.props.ws}
+          />
         </>
       )
     } else {

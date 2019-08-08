@@ -1,38 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Messages extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      msgs: [],
-    
-    }
-  }
-
-  componentDidMount() {
-    const ws = new WebSocket('ws://st-chat.shas.tel');
-    ws.onmessage = (msg) => (
-      this.setState({
-        // msgs: [...this.state.msgs, JSON.parse(msg.data)],
-        msgs: JSON.parse(msg.data),
-      })
-    )
-  }
-
-  render() {
-    const { msgs } = this.state;
-    return (
-      <ul
-        key={msgs.time}
-      >
-        {msgs.map(msg =>
-          <li>
-            <div>{msg.message}</div>
-          </li>
-        )}
-      </ul>
-    )
-  }
+function Messages (props) {
+  const { msgs } = props;
+  
+  return (
+    <ul>
+      {msgs.map(msg =>
+        <li
+          key={msg.id}
+        >
+          <div>{msg.message}</div>
+          <div>{msg.from}</div>
+          <div>{(new Date(msg.time)).toString()}</div>
+        </li>
+      )}
+    </ul>
+  )
 }
 
 export default Messages;

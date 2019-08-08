@@ -1,9 +1,11 @@
 import React from 'react';
 
-function Head() {
+function Head(props) {
+  const {status} = props;
   return (
     <header>
       <h1>Welcome to chat</h1>
+      <p>{status ? 'connected' : 'not'}</p>
     </header>
   )
 }
