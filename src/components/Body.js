@@ -2,10 +2,11 @@ import React from 'react';
 
 import Messages from './Messages';
 import MessageForm from './MessageForm';
+import LoginForm from './LoginForm';
 import '../styles/body.css'
 
 function Body(props) {
-  const { msgs, ws, scrollTop, scrolling } = props;
+  const { onLogin, from, msgs, ws, scrollTop, scrolling } = props;
   return (
     <main>
       <Messages
@@ -13,9 +14,13 @@ function Body(props) {
         scrollTop={scrollTop}
         scrolling={scrolling}
       />
-      <MessageForm
-        ws={ws}
-      />
+      {from ? <MessageForm
+          ws={ws}
+          from={from}
+        />
+        : <LoginForm
+          onLogin={onLogin}
+        />}
     </main>
   )
 }

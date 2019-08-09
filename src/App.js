@@ -8,10 +8,17 @@ import './styles/app.css';
 class App extends Component {
   constructor(props){
     super(props);
+    // localStorage.clear();
+    let msgsInStorage = [];
+    const from = localStorage.getItem('from') ? localStorage.getItem('from') : false;
+    if (localStorage.getItem('msgs')) {
+      msgsInStorage = localStorage.getItem('msgs');
+    }
+
     this.state = {
       connectStatus: null,
-      isLogin: false,
-      msgs: [],
+      from: from,
+      msgs: msgsInStorage,
       scrollTop: 500,
     }
     this.ws = new WebSocket('ws://st-chat.shas.tel');
@@ -39,6 +46,24 @@ class App extends Component {
     )
   }
 
+  componentWillUnmount() {
+    localStorage.setItem('msgs', this.state.msgs);
+  }
+
+  handleLogout = () => {
+    localStorage.removeItem('from');
+    this.setState({
+      from: false,
+    })
+  }
+
+  handleLogin = () => {
+    localStorage.setItem('from', 'me');
+    this.setState({
+      from: 'me',
+    })
+  }
+
   handleScroll = (ev) => {
     const fromTop = ev.target.scrollHeight;
     this.setState({
@@ -47,18 +72,22 @@ class App extends Component {
   }
 
   render() {
-    const { msgs, connectStatus } = this.state;
+    const { from, msgs, scrollTop, connectStatus } = this.state;
     return (
       <>
         <Head
           // status={connectStatus}
+          from={from}
+          onLogout={this.handleLogout}
+          onLogin={this.handleLogin}
         />
         <Body
           msgs={msgs}
-          isLogin={true}
+          onLogin={this.handleLogin}
+          from={from}
           user="test"
           ws={this.ws}
-          scrollTop={this.state.scrollTop}
+          scrollTop={scrollTop}
           scrolling={this.handleScroll}
         />
         <Foot />

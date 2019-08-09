@@ -14,7 +14,7 @@ class MessageForm extends Component {
 
   handleSubmit = (event) => {
     const msg = {
-      from: 'xxx',
+      from: this.props.from,
       message: this.state.value,
     };
     this.props.ws.send(JSON.stringify(msg));
