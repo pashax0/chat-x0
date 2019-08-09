@@ -1,0 +1,30 @@
+ul.messages {
+    max-height: 80vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: white;
+
+    .msg-container {
+        display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid black;
+
+        .msg-info {
+            display: flex;
+            
+            .msg-author,
+            .msg-date {
+                max-width: 50%;
+                overflow: hidden;
+            }
+        }
+    }
+
+    .msg-container:last-child {
+        border-bottom: hidden;
+    }
+
+    .msg-text {
+        word-wrap: break-word
+    }
+}

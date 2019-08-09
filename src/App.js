@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import Head from './components/Head';
 import Body from './components/Body';
 import Foot from './components/Foot';
-import './styles/app.css';
+import './styles/reset.css';
+import './styles/app.scss';
 
 class App extends Component {
   constructor(props){

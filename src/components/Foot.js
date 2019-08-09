@@ -16,7 +16,7 @@ function Foot(props) {
           onLogin={onLogin}
         />
       }
-      <small>© pashax0 {new Date().getFullYear()}</small>
+      <small className="copyright">© pashax0 {new Date().getFullYear()}</small>
     </footer>
   )
 }

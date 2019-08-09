@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 
-import '../styles/messages.css';
+import '../styles/messages.scss';
 
 class Messages extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      showLoader: false,
     }
     this.listRef = React.createRef();
   }
@@ -20,6 +20,13 @@ class Messages extends Component {
   //   }
   //   return null;
   // }
+  componentDidMount() {
+    // setTimeout(() => {
+    //   if(this.loading){
+    //     this.setState({ showLoader: true })
+    //   }
+    // }, 5000);
+  }
 
   componentDidUpdate(prevProps) {
     const { msgs } = this.props;
@@ -34,23 +41,33 @@ class Messages extends Component {
 
   render() {
     const { msgs } = this.props;
-    return (
-      <ul
-        className="massages"
-        ref="list"
-        // onScroll={(ev) => this.props.scrolling(ev)}
-      >
-        {msgs.map(msg =>
-          <li
-            key={msg.id}
-          >
-            <div>{msg.message}</div>
-            <div>{msg.from}</div>
-            <div>{(new Date(msg.time)).toString()}</div>
-          </li>
-        )}
-      </ul>
-    )
+    // if(this.state.showLoader) {
+      return (
+        <ul
+          className="messages"
+          ref="list"
+          // onScroll={(ev) => this.props.scrolling(ev)}
+        >
+          {msgs.map(msg =>
+            <li
+              className="msg-container"
+              key={msg.id}
+            >
+              <div className="msg-info">
+                <div
+                  className="msg-author"
+                >{msg.from}</div>
+                <div
+                  className="msg-date"
+                >{(new Date(msg.time)).toLocaleString()}</div>
+              </div>
+              <div className="msg-text"
+              >{msg.message}</div>
+            </li>
+          )}
+        </ul>
+      )
+    // }
   }
 }
 

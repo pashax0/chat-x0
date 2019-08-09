@@ -1,14 +1,16 @@
 import React from 'react';
 
-function Head(props) {
+function Login(props) {
   return (
-    <>
-      <h1>Please, login!</h1>
+    <div
+      className="login-attent"
+    >
+      <h1>For commenting, please, login!</h1>
       <button
         onClick={() => props.onLogin()}
       >Login</button>
-    </>
+    </div>
   )
 }
 
-export default Head;
+export default Login;

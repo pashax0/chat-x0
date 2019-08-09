@@ -7,7 +7,7 @@ label {
     display: flex;
 }
 
-input[type='text'] {
+textarea[type='text'] {
     flex-grow: 1;
     color: brown;
 }

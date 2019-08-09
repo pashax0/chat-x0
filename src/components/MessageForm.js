@@ -27,8 +27,8 @@ class MessageForm extends Component {
       <>
         <form className="mess-form" onSubmit={(ev) => this.handleSubmit(ev)}>
           <label>
-            <div>Message:</div>
-            <input type="text" value={this.state.value} onChange={this.handleChange} />
+            {/* <div>Message:</div> */}
+            <textarea type="text" value={this.state.value} onChange={this.handleChange} />
           </label>
           <input type="submit" value="Send" />
         </form>
