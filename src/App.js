@@ -10,12 +10,14 @@ class App extends Component {
     super(props);
     // localStorage.clear();
     let msgsInStorage = [];
+    const notif = localStorage.getItem('notif') ? localStorage.getItem('notif') : null;
     const from = localStorage.getItem('from') ? localStorage.getItem('from') : false;
     if (localStorage.getItem('msgs')) {
       msgsInStorage = localStorage.getItem('msgs');
     }
-
+    
     this.state = {
+      notificationPerm: notif,
       connectStatus: null,
       from: from,
       msgs: msgsInStorage,
@@ -26,6 +28,28 @@ class App extends Component {
 
   componentDidMount() {
     
+    if (!("Notification" in window)) {
+      console.log("This browser does not support desktop notification");
+    } else {
+      if (!this.state.notificationPerm) {
+        Notification.requestPermission()
+          .then(result => {
+            this.setState({
+              notificationPerm: result,
+            })
+          })
+      }
+    }
+    //   if (Notification.permission === "granted") {
+    //   this.notification = new Notification("Hi there!");
+    // } else if (Notification.permission !== 'denied') {
+    //   Notification.requestPermission(function (permission) {
+    //     if (permission === "granted") {
+    //       var notification = new Notification("Hi there!");
+    //     }
+    //   });
+    // }
+
     // this.ws.onopen = () => (
     //   this.setState({
     //     connectStatus: true,
@@ -36,14 +60,14 @@ class App extends Component {
     //     connectStatus: false,
     //   })
     // )
-    this.ws.onmessage = (msg) => (
+    this.ws.onmessage = (msg) => {
       this.setState((state) => {
         const reverseData = JSON.parse(msg.data).reverse();
         return {
           msgs: [...state.msgs, ...reverseData],
         }
       })
-    )
+    }
   }
 
   componentWillUnmount() {

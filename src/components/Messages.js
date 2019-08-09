@@ -26,7 +26,9 @@ class Messages extends Component {
     const msgsList = this.refs.list;
     const { scrollTop } = this.props;
     if (prevProps.msgs.length !== msgs.length) {
-      msgsList.scrollTo(0, scrollTop);
+      const notifText = msgs[msgs.length - 1].message;
+      new Notification('Chat-x0',{body: notifText});
+      // msgsList.scrollTo(0, scrollTop);
     }
   }
 
