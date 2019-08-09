@@ -12,22 +12,23 @@ class App extends Component {
       connectStatus: null,
       isLogin: false,
       msgs: [],
+      scrollTop: 500,
     }
     this.ws = new WebSocket('ws://st-chat.shas.tel');
   }
 
   componentDidMount() {
     
-    this.ws.onopen = () => (
-      this.setState({
-        connectStatus: true,
-      })
-    )
-    this.ws.onerror = () => (
-      this.setState({
-        connectStatus: false,
-      })
-    )
+    // this.ws.onopen = () => (
+    //   this.setState({
+    //     connectStatus: true,
+    //   })
+    // )
+    // this.ws.onerror = () => (
+    //   this.setState({
+    //     connectStatus: false,
+    //   })
+    // )
     this.ws.onmessage = (msg) => (
       this.setState((state) => {
         const reverseData = JSON.parse(msg.data).reverse();
@@ -38,18 +39,27 @@ class App extends Component {
     )
   }
 
+  handleScroll = (ev) => {
+    const fromTop = ev.target.scrollHeight;
+    this.setState({
+      scrollTop: fromTop,
+    })
+  }
+
   render() {
     const { msgs, connectStatus } = this.state;
     return (
       <>
         <Head
-          status={connectStatus}
+          // status={connectStatus}
         />
         <Body
           msgs={msgs}
           isLogin={true}
           user="test"
           ws={this.ws}
+          scrollTop={this.state.scrollTop}
+          scrolling={this.handleScroll}
         />
         <Foot />
       </>
