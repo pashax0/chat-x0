@@ -1,0 +1,11 @@
+#root {
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* background-color: black; */
+}
+
+#root>* {
+    margin: 0 auto;
+    max-width: 900px;
+}

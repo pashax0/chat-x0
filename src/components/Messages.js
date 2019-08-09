@@ -1,10 +1,12 @@
 import React from 'react';
 
+import '../styles/messages.css';
+
 function Messages (props) {
   const { msgs } = props;
   
   return (
-    <ul>
+    <ul className="massages">
       {msgs.map(msg =>
         <li
           key={msg.id}
