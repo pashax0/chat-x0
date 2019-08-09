@@ -1,0 +1,2 @@
+ul.messages{max-height:80vh;overflow-y:scroll;overflow-x:hidden;background-color:#fff}ul.messages .msg-container{display:flex;flex-direction:column;border-bottom:1px solid #000}ul.messages .msg-container .msg-info{display:flex}ul.messages .msg-container .msg-info .msg-author,ul.messages .msg-container .msg-info .msg-date{max-width:50%;overflow:hidden}ul.messages .msg-container:last-child{border-bottom:hidden}ul.messages .msg-text{word-wrap:break-word}
+/*# sourceMappingURL=3.646ae0ec.chunk.css.map */
