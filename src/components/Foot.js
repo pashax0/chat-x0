@@ -1,8 +1,21 @@
 import React from 'react';
 
-function Foot() {
+import MessageForm from './MessageForm';
+import LoginForm from './LoginForm';
+
+function Foot(props) {
+  const { onLogin, from, ws } = props;
+
   return (
     <footer>
+      {from ? <MessageForm
+          ws={ws}
+          from={from}
+        />
+        : <LoginForm
+          onLogin={onLogin}
+        />
+      }
       <small>© pashax0 {new Date().getFullYear()}</small>
     </footer>
   )

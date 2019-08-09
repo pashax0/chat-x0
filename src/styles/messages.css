@@ -1,5 +1,5 @@
 ul.massages {
-    max-height: 400px;
+    max-height: 80vh;
     overflow-y: scroll;
     background-color: white;
 }

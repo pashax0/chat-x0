@@ -18,7 +18,7 @@ class App extends Component {
     
     this.state = {
       notificationPerm: notif,
-      connectStatus: null,
+      wsStatus: null,
       from: from,
       msgs: msgsInStorage,
       scrollTop: 500,
@@ -27,7 +27,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    
     if (!("Notification" in window)) {
       console.log("This browser does not support desktop notification");
     } else {
@@ -68,12 +67,20 @@ class App extends Component {
         }
       })
     }
+
+    this.ws.onclose = (ev) => console.log(ev.code);
   }
 
-  componentWillUnmount() {
-    localStorage.setItem('msgs', this.state.msgs);
+  componentDidUpdate() {
+    // const ws = new WebSocket('ws://st-chat.shas.tel');
+    // if (ws.readyState !== this.state.wsStatus) {
+    //   this.setState({
+    //     wsStatus: ws.readyState,
+    //   })
+    // }
+    console.log(this.ws.readyState);
   }
-
+  
   handleLogout = () => {
     localStorage.removeItem('from');
     this.setState({
@@ -96,7 +103,7 @@ class App extends Component {
   }
 
   render() {
-    const { from, msgs, scrollTop, connectStatus } = this.state;
+    const { wsStatus, from, msgs, scrollTop, connectStatus } = this.state;
     return (
       <>
         <Head
@@ -106,6 +113,7 @@ class App extends Component {
           onLogin={this.handleLogin}
         />
         <Body
+          wsStatus={wsStatus}
           msgs={msgs}
           onLogin={this.handleLogin}
           from={from}
@@ -114,7 +122,11 @@ class App extends Component {
           scrollTop={scrollTop}
           scrolling={this.handleScroll}
         />
-        <Foot />
+        <Foot
+          onLogin={this.handleLogin}
+          from={from}
+          ws={this.ws}
+        />
       </>
     );
   }
