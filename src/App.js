@@ -9,16 +9,13 @@ import './styles/app.scss';
 class App extends Component {
   constructor(props){
     super(props);
-    // localStorage.clear();
     let msgsInStorage = [];
-    const notif = localStorage.getItem('notif') ? localStorage.getItem('notif') : null;
     const from = localStorage.getItem('from') ? localStorage.getItem('from') : false;
     if (localStorage.getItem('msgs')) {
       msgsInStorage = localStorage.getItem('msgs');
     }
     
     this.state = {
-      notificationPerm: notif,
       wsStatus: null,
       from: from,
       msgs: msgsInStorage,
@@ -28,28 +25,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    if (!("Notification" in window)) {
-      console.log("This browser does not support desktop notification");
-    } else {
-      if (!this.state.notificationPerm) {
-        Notification.requestPermission()
-          .then(result => {
-            this.setState({
-              notificationPerm: result,
-            })
-          })
-      }
-    }
-    //   if (Notification.permission === "granted") {
-    //   this.notification = new Notification("Hi there!");
-    // } else if (Notification.permission !== 'denied') {
-    //   Notification.requestPermission(function (permission) {
-    //     if (permission === "granted") {
-    //       var notification = new Notification("Hi there!");
-    //     }
-    //   });
-    // }
-
+    this.handleNotification();
+    
     // this.ws.onopen = () => (
     //   this.setState({
     //     connectStatus: true,
@@ -81,15 +58,32 @@ class App extends Component {
     // }
     console.log(this.ws.readyState);
   }
+
+  handleNotification() {
+    if (!("Notification" in window)) {
+      console.log("This browser does not support desktop notification");
+    } else {
+      if (Notification.permission === 'default') {
+        Notification.requestPermission()
+          .then(result => {
+            result === 'granted' ? alert(`Thank, you!`) : alert('If you change your mind, please - click this button!');
+          })
+      }
+    }
+  }
   
   handleLogout = () => {
     localStorage.removeItem('from');
+    localStorage.removeItem('notif');
     this.setState({
       from: false,
+      notificationPerm: null,
     })
+    
   }
 
   handleLogin = () => {
+    this.handleNotification();
     localStorage.setItem('from', 'me');
     this.setState({
       from: 'me',

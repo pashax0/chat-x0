@@ -7,6 +7,7 @@ class Messages extends Component {
     super(props);
     this.state = {
       showLoader: false,
+      isActiveWindow: true,
     }
     this.listRef = React.createRef();
   }
@@ -21,6 +22,16 @@ class Messages extends Component {
   //   return null;
   // }
   componentDidMount() {
+    window.addEventListener("focus", () => (
+      this.setState({
+        isActiveWindow: true,
+      })
+    ))
+    window.addEventListener("blur", () => (
+      this.setState({
+        isActiveWindow: false,
+      })
+    ))
     // setTimeout(() => {
     //   if(this.loading){
     //     this.setState({ showLoader: true })
@@ -32,7 +43,9 @@ class Messages extends Component {
     const { msgs } = this.props;
     const msgsList = this.refs.list;
     const { scrollTop } = this.props;
-    if (prevProps.msgs.length !== msgs.length) {
+    if (Notification.permission === 'granted'
+      && prevProps.msgs.length !== msgs.length
+      && !this.state.isActiveWindow) {
       const notifText = msgs[msgs.length - 1].message;
       new Notification('Chat-x0',{body: notifText});
       // msgsList.scrollTo(0, scrollTop);
