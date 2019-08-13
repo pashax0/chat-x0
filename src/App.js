@@ -21,32 +21,43 @@ class App extends Component {
       msgs: msgsInStorage,
       scrollTop: 500,
     }
-    this.ws = new WebSocket('ws://st-chat.shas.tel');
+
+    this.ws = new WebSocket('wss://wssproxy.herokuapp.com');
+  
   }
 
   componentDidMount() {
-    this.handleNotification();
+    // this.timer = setInterval(() => this.getWsStatus(), 3000);
     
-    // this.ws.onopen = () => (
-    //   this.setState({
-    //     connectStatus: true,
-    //   })
-    // )
-    // this.ws.onerror = () => (
-    //   this.setState({
-    //     connectStatus: false,
-    //   })
-    // )
+    
+    this.ws.onopen = () => {
+      console.log(`onopen - ${this.ws.readyState}`);
+      this.setState({
+        wsStatus: 'open',
+      })
+    };
+    
+    this.ws.onerror = () => {
+      console.log(`onerror - ${this.ws.readyState}`);
+    };
+
     this.ws.onmessage = (msg) => {
+      console.log(`onmessage - ${this.ws.readyState}`);
       this.setState((state) => {
         const reverseData = JSON.parse(msg.data).reverse();
         return {
           msgs: [...state.msgs, ...reverseData],
         }
       })
-    }
+    };
 
-    this.ws.onclose = (ev) => console.log(ev.code);
+    this.ws.onclose = (ev) => {
+      console.log(`onclose ${ev.code} - ${this.ws.readyState}`);
+    };
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   componentDidUpdate() {
@@ -56,10 +67,10 @@ class App extends Component {
     //     wsStatus: ws.readyState,
     //   })
     // }
-    console.log(this.ws.readyState);
+    console.log('App update');
   }
 
-  handleNotification() {
+  setNotification() {
     if (!("Notification" in window)) {
       console.log("This browser does not support desktop notification");
     } else {
@@ -71,19 +82,26 @@ class App extends Component {
       }
     }
   }
+
+  getWsStatus() {
+    // this.ws.send('');
+    if (this.ws.readyState === WebSocket.CLOSED) {
+      console.log(`ws status - closed`);
+    };
+    console.log(`ws status - ${this.ws.readyState}`);
+  }
   
   handleLogout = () => {
     localStorage.removeItem('from');
     localStorage.removeItem('notif');
     this.setState({
       from: false,
-      notificationPerm: null,
     })
     
   }
 
   handleLogin = () => {
-    this.handleNotification();
+    // this.setNotification();
     localStorage.setItem('from', 'me');
     this.setState({
       from: 'me',
@@ -108,19 +126,14 @@ class App extends Component {
           onLogin={this.handleLogin}
         />
         <Body
-          wsStatus={wsStatus}
           msgs={msgs}
-          onLogin={this.handleLogin}
-          from={from}
-          user="test"
-          ws={this.ws}
           scrollTop={scrollTop}
           scrolling={this.handleScroll}
         />
         <Foot
           onLogin={this.handleLogin}
           from={from}
-          ws={this.ws}
+          // ws={this.ws}
         />
       </>
     );
