@@ -133,7 +133,7 @@ class App extends Component {
         <Foot
           onLogin={this.handleLogin}
           from={from}
-          // ws={this.ws}
+          ws={this.ws}
         />
       </>
     );
