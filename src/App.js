@@ -28,6 +28,32 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.handlerInternetStatus();
+    this.handlerWindowStatus();
+    this.connectWs();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    clearInterval(this.timer);
+
+    if (this.state.wsStatus !== prevState.wsStatus) {
+      this.setState({
+        msgs: [],
+      })
+    }
+
+    if (this.state.wsStatus !== 1) {
+      this.timer = setInterval(() => this.connectWs(), 10000);
+    }
+  }
+
+  handlerInternetStatus() {
+    this.setState({online: navigator.onLine,})
+    window.addEventListener("offline", () => this.setState({online: false, wsStatus: 'offline'}))
+    window.addEventListener("online", () => this.setState({online: true,}))
+  }
+
+  handlerWindowStatus() {
     window.addEventListener("focus", () => (
       this.setState({
         isActiveWindow: true,
@@ -38,24 +64,9 @@ class App extends Component {
         isActiveWindow: false,
       })
     ))
-
-    this.connect();
   }
 
-  getInternetStatus() {
-    this.setState({
-      
-    })
-  }
-
-  componentDidUpdate() {
-    clearInterval(this.timer);
-    if (this.state.wsStatus !== 1) {
-      this.timer = setInterval(() => this.connect(), 10000);
-    }
-  }
-
-  connect() {
+  connectWs() {
     this.ws = new WebSocket('wss://wssproxy.herokuapp.com/');
     
     this.ws.onopen = () => {
@@ -67,9 +78,6 @@ class App extends Component {
 
     this.ws.onerror = () => {
       console.log(`onerror - ${this.ws.readyState}`);
-      // this.setState({
-      //   wsStatus: 'error',
-      // })
     };
 
     this.ws.onclose = (ev) => {

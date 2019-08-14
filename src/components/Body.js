@@ -11,7 +11,7 @@ const Messages = lazy(() => {
 
 
 function Body(props) {
-  const { wsStatus, msgs, scrollTop, scrolling } = props;
+  const { wsStatus, ws, msgs, scrollTop, scrolling } = props;
   return (
     <main>
       {(wsStatus !== 1006) ? 
@@ -21,7 +21,7 @@ function Body(props) {
           color="#000"
         />}>
           <Messages
-            // ws={ws}
+            ws={ws}
             msgs={msgs}
             scrollTop={scrollTop}
             scrolling={scrolling}

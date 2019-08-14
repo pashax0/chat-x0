@@ -7,7 +7,7 @@ class Messages extends Component {
     super(props);
     this.state = {
       showLoader: false,
-      // isActiveWindow: true,
+      isActiveWindow: true,
       msgs: [],
     }
     this.listRef = React.createRef();
@@ -23,35 +23,8 @@ class Messages extends Component {
   //   return null;
   // }
   componentDidMount() {
-    // window.addEventListener("focus", () => (
-    //   this.setState({
-    //     isActiveWindow: true,
-    //   })
-    // ))
-    // window.addEventListener("blur", () => (
-    //   this.setState({
-    //     isActiveWindow: false,
-    //   })
-    // ))
-
-    // this.props.ws.onmessage = (msg) => {
-    //   this.setState((state) => {
-    //     const reverseData = JSON.parse(msg.data).reverse();
-    //     return {
-    //       msgs: [...state.msgs, ...reverseData],
-    //     }
-    //   })
-    // }
-    
-    // setTimeout(() => {
-    //   if(this.loading){
-    //     this.setState({ showLoader: true })
-    //   }
-    // }, 5000);
-  }
-
-  componentWillUnmount() {
-
+    console.log('message update');
+    // msgsList.scrollTo(0, scrollTop);
   }
 
   componentDidUpdate(prevProps) {
@@ -63,7 +36,6 @@ class Messages extends Component {
       && !this.state.isActiveWindow) {
       const notifText = msgs[msgs.length - 1].message;
       new Notification('Chat-x0',{body: notifText});
-      // msgsList.scrollTo(0, scrollTop);
     }
   }
 
