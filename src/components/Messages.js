@@ -7,7 +7,7 @@ class Messages extends Component {
     super(props);
     this.state = {
       showLoader: false,
-      isActiveWindow: true,
+      // isActiveWindow: true,
       msgs: [],
     }
     this.listRef = React.createRef();
@@ -23,16 +23,16 @@ class Messages extends Component {
   //   return null;
   // }
   componentDidMount() {
-    window.addEventListener("focus", () => (
-      this.setState({
-        isActiveWindow: true,
-      })
-    ))
-    window.addEventListener("blur", () => (
-      this.setState({
-        isActiveWindow: false,
-      })
-    ))
+    // window.addEventListener("focus", () => (
+    //   this.setState({
+    //     isActiveWindow: true,
+    //   })
+    // ))
+    // window.addEventListener("blur", () => (
+    //   this.setState({
+    //     isActiveWindow: false,
+    //   })
+    // ))
 
     // this.props.ws.onmessage = (msg) => {
     //   this.setState((state) => {
@@ -48,6 +48,10 @@ class Messages extends Component {
     //     this.setState({ showLoader: true })
     //   }
     // }, 5000);
+  }
+
+  componentWillUnmount() {
+
   }
 
   componentDidUpdate(prevProps) {

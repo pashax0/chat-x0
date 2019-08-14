@@ -10,7 +10,7 @@ import './styles/app.scss';
 class App extends Component {
   constructor(props){
     super(props);
-    localStorage.clear();
+    // localStorage.clear();
     let msgsInStorage = [];
     const from = localStorage.getItem('from') ? localStorage.getItem('from') : false;
     if (localStorage.getItem('msgs')) {
@@ -18,43 +18,68 @@ class App extends Component {
     }
     
     this.state = {
+      online: null,
+      isActiveWindow: true,
       wsStatus: null,
       from: from,
       msgs: msgsInStorage,
       scrollTop: 500,
     }
-
-    
-    // this.ws = new Ws('wss://wssproxy.herokuapp.com', true);
-    // this.ws.connect();
   }
 
   componentDidMount() {
-    const ws = new WebSocket('wss://wssproxy.herokuapp.com/');
-    
-    ws.onopen = () => {
-      // console.log(`onopen - ${this.ws.readyState}`);
+    window.addEventListener("focus", () => (
       this.setState({
-        wsStatus: ws.readyState,
+        isActiveWindow: true,
+      })
+    ))
+    window.addEventListener("blur", () => (
+      this.setState({
+        isActiveWindow: false,
+      })
+    ))
+
+    this.connect();
+  }
+
+  getInternetStatus() {
+    this.setState({
+      
+    })
+  }
+
+  componentDidUpdate() {
+    clearInterval(this.timer);
+    if (this.state.wsStatus !== 1) {
+      this.timer = setInterval(() => this.connect(), 10000);
+    }
+  }
+
+  connect() {
+    this.ws = new WebSocket('wss://wssproxy.herokuapp.com/');
+    
+    this.ws.onopen = () => {
+      console.log(`onopen - ${this.ws.readyState}`);
+      this.setState({
+        wsStatus: this.ws.readyState,
       })
     };
 
-    ws.onerror = () => {
-      // console.log(`onerror - ${this.ws.readyState}`);
+    this.ws.onerror = () => {
+      console.log(`onerror - ${this.ws.readyState}`);
       // this.setState({
       //   wsStatus: 'error',
       // })
     };
 
-    ws.onclose = (ev) => {
+    this.ws.onclose = (ev) => {
       this.setState({
         wsStatus: ev.code,
       })
-
-      // console.log(`onclose ${ev.code} - ${this.ws.readyState}`);
+      console.log(`onclose ${ev.code} - ${this.ws.readyState}`);
     };
 
-    ws.onmessage = (msg) => {
+    this.ws.onmessage = (msg) => {
       this.setState((state) => {
         const reverseData = JSON.parse(msg.data).reverse();
         return {
@@ -62,14 +87,6 @@ class App extends Component {
         }
       })
     };
-}
-
-  componentWillUnmount() {
-    clearInterval(this.timer);
-  }
-
-  componentDidUpdate() {
-    console.log('App update');
   }
 
   setNotification() {
@@ -85,21 +102,12 @@ class App extends Component {
     }
   }
 
-  getWsStatus() {
-    // this.ws.send('');
-    if (this.ws.readyState === WebSocket.CLOSED) {
-      console.log(`ws status - closed`);
-    };
-    console.log(`ws status - ${this.ws.readyState}`);
-  }
-  
-  handleLogout = () => {
+ handleLogout = () => {
     localStorage.removeItem('from');
     localStorage.removeItem('notif');
     this.setState({
       from: false,
     })
-    
   }
 
   handleLogin = () => {
@@ -159,7 +167,6 @@ class App extends Component {
           onLogin={this.handleLogin}
           from={from}
           onSendMsg={this.handleSendMsg}
-          // ws={this.ws}
         />
       </>
     );
