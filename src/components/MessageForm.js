@@ -12,13 +12,9 @@ class MessageForm extends Component {
     this.setState({value: event.target.value});
   }
 
-  handleSubmit = (event) => {
-    const msg = {
-      from: this.props.from,
-      message: this.state.value,
-    };
-    this.props.ws.send(JSON.stringify(msg));
-    event.preventDefault();
+  handleSubmit = (ev) => {
+    this.props.onSendMsg(this.state.value);
+    ev.preventDefault();
     this.setState({value: ''});
   }
 

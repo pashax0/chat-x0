@@ -8,6 +8,7 @@ class Messages extends Component {
     this.state = {
       showLoader: false,
       isActiveWindow: true,
+      msgs: [],
     }
     this.listRef = React.createRef();
   }
@@ -32,6 +33,16 @@ class Messages extends Component {
         isActiveWindow: false,
       })
     ))
+
+    // this.props.ws.onmessage = (msg) => {
+    //   this.setState((state) => {
+    //     const reverseData = JSON.parse(msg.data).reverse();
+    //     return {
+    //       msgs: [...state.msgs, ...reverseData],
+    //     }
+    //   })
+    // }
+    
     // setTimeout(() => {
     //   if(this.loading){
     //     this.setState({ showLoader: true })
@@ -53,6 +64,7 @@ class Messages extends Component {
   }
 
   render() {
+    // const { msgs } = this.state;
     const { msgs } = this.props;
     // if(this.state.showLoader) {
       return (

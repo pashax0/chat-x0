@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+// import Ws from './services/websocket';
 import Head from './components/Head';
 import Body from './components/Body';
 import Foot from './components/Foot';
@@ -9,6 +10,7 @@ import './styles/app.scss';
 class App extends Component {
   constructor(props){
     super(props);
+    localStorage.clear();
     let msgsInStorage = [];
     const from = localStorage.getItem('from') ? localStorage.getItem('from') : false;
     if (localStorage.getItem('msgs')) {
@@ -22,27 +24,37 @@ class App extends Component {
       scrollTop: 500,
     }
 
-    this.ws = new WebSocket('wss://wssproxy.herokuapp.com');
-  
+    
+    // this.ws = new Ws('wss://wssproxy.herokuapp.com', true);
+    // this.ws.connect();
   }
 
   componentDidMount() {
-    // this.timer = setInterval(() => this.getWsStatus(), 3000);
+    const ws = new WebSocket('wss://wssproxy.herokuapp.com/');
     
-    
-    this.ws.onopen = () => {
-      console.log(`onopen - ${this.ws.readyState}`);
+    ws.onopen = () => {
+      // console.log(`onopen - ${this.ws.readyState}`);
       this.setState({
-        wsStatus: 'open',
+        wsStatus: ws.readyState,
       })
     };
-    
-    this.ws.onerror = () => {
-      console.log(`onerror - ${this.ws.readyState}`);
+
+    ws.onerror = () => {
+      // console.log(`onerror - ${this.ws.readyState}`);
+      // this.setState({
+      //   wsStatus: 'error',
+      // })
     };
 
-    this.ws.onmessage = (msg) => {
-      console.log(`onmessage - ${this.ws.readyState}`);
+    ws.onclose = (ev) => {
+      this.setState({
+        wsStatus: ev.code,
+      })
+
+      // console.log(`onclose ${ev.code} - ${this.ws.readyState}`);
+    };
+
+    ws.onmessage = (msg) => {
       this.setState((state) => {
         const reverseData = JSON.parse(msg.data).reverse();
         return {
@@ -50,23 +62,13 @@ class App extends Component {
         }
       })
     };
-
-    this.ws.onclose = (ev) => {
-      console.log(`onclose ${ev.code} - ${this.ws.readyState}`);
-    };
-  }
+}
 
   componentWillUnmount() {
     clearInterval(this.timer);
   }
 
   componentDidUpdate() {
-    // const ws = new WebSocket('ws://st-chat.shas.tel');
-    // if (ws.readyState !== this.state.wsStatus) {
-    //   this.setState({
-    //     wsStatus: ws.readyState,
-    //   })
-    // }
     console.log('App update');
   }
 
@@ -101,7 +103,6 @@ class App extends Component {
   }
 
   handleLogin = () => {
-    // this.setNotification();
     localStorage.setItem('from', 'me');
     this.setState({
       from: 'me',
@@ -115,17 +116,41 @@ class App extends Component {
     })
   }
 
+  handleSendMsg = (text) => {
+    if (this.state.wsStatus === 1) {
+      const msg = {
+        from: this.state.from,
+        message: text,
+      };
+      this.ws.send(JSON.stringify(msg));
+    } else {
+      let localMsgs = JSON.parse(localStorage.getItem('msgs')) || [];
+      localMsgs.push(text);
+      localStorage.setItem('msgs', JSON.stringify(localMsgs));
+    }
+  }
+
+  // handleGetMsg = (msg) => {
+  //   this.setState((state) => {
+  //     const reverseData = JSON.parse(msg.data).reverse();
+  //     return {
+  //       msgs: [...state.msgs, ...reverseData],
+  //     }
+  //   })
+  // }
+
   render() {
-    const { wsStatus, from, msgs, scrollTop, connectStatus } = this.state;
+    const { wsStatus, from, msgs, scrollTop } = this.state;
     return (
       <>
         <Head
-          // status={connectStatus}
+          wsStatus={wsStatus}
           from={from}
           onLogout={this.handleLogout}
           onLogin={this.handleLogin}
         />
         <Body
+          wsStatus={wsStatus}
           msgs={msgs}
           scrollTop={scrollTop}
           scrolling={this.handleScroll}
@@ -133,7 +158,8 @@ class App extends Component {
         <Foot
           onLogin={this.handleLogin}
           from={from}
-          ws={this.ws}
+          onSendMsg={this.handleSendMsg}
+          // ws={this.ws}
         />
       </>
     );

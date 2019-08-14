@@ -4,12 +4,12 @@ import MessageForm from './MessageForm';
 import LoginForm from './LoginForm';
 
 function Foot(props) {
-  const { onLogin, from, ws } = props;
+  const { onLogin, from, ws, onSendMsg } = props;
 
   return (
     <footer>
       {from ? <MessageForm
-          ws={ws}
+          onSendMsg={onSendMsg}
           from={from}
         />
         : <LoginForm

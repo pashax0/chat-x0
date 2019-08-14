@@ -11,20 +11,27 @@ const Messages = lazy(() => {
 
 
 function Body(props) {
-  const { msgs, scrollTop, scrolling } = props;
+  const { wsStatus, msgs, scrollTop, scrolling } = props;
   return (
     <main>
-      <Suspense fallback={<Spinner
-        className="spiner"
-        type="Triangle"
-        color="#000"
-      />}>
-        <Messages
-          msgs={msgs}
-          scrollTop={scrollTop}
-          scrolling={scrolling}
-        />
-      </Suspense>
+      {(wsStatus !== 1006) ? 
+        <Suspense fallback={<Spinner
+          className="spiner"
+          type="Triangle"
+          color="#000"
+        />}>
+          <Messages
+            // ws={ws}
+            msgs={msgs}
+            scrollTop={scrollTop}
+            scrolling={scrolling}
+          />
+        </Suspense>
+        : <div className="error">
+          <p>Error with your connection!</p>
+          <p>You can send message, but it will be send after reconnection</p>
+        </div>
+      }
     </main>
   )
 }
