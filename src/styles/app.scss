@@ -5,6 +5,7 @@
 
 html, body {
     height: 100%;
+    font-size: 16px;
   }
   
 #root {
@@ -21,7 +22,7 @@ html, body {
     }
 
     header {
-        max-height: 5vh;
+        min-height: 10vh;
         display: flex;
         justify-content: space-between;
         align-items: center;

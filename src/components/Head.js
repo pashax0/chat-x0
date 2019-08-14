@@ -8,7 +8,7 @@ function Head(props) {
   return (
     <header>
       <h1>{user}, welcome to chat</h1>
-      <p>{wsStatus}</p>
+      {/* <p>{wsStatus}</p> */}
       {from ? <button onClick={() => onLogout()}>logout</button>
       : <LoginButton
         onLogin={onLogin}

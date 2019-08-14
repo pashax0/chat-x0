@@ -8,7 +8,7 @@ class Messages extends Component {
     this.state = {
       showLoader: false,
       isActiveWindow: true,
-      msgs: [],
+      // msgs: [],
     }
     this.listRef = React.createRef();
   }
@@ -24,13 +24,13 @@ class Messages extends Component {
   // }
   componentDidMount() {
     console.log('message update');
-    // msgsList.scrollTo(0, scrollTop);
+    const msgsList = this.refs.list;
+    const { scrollTop } = this.props;
+    msgsList.scrollTo(0, msgsList.scrollHeight);
   }
 
   componentDidUpdate(prevProps) {
     const { msgs } = this.props;
-    const msgsList = this.refs.list;
-    const { scrollTop } = this.props;
     if (Notification.permission === 'granted'
       && prevProps.msgs.length !== msgs.length
       && !this.state.isActiveWindow) {
@@ -41,7 +41,7 @@ class Messages extends Component {
 
   render() {
     // const { msgs } = this.state;
-    const { msgs } = this.props;
+    const { msgs, from } = this.props;
     // if(this.state.showLoader) {
       return (
         <ul
@@ -51,7 +51,7 @@ class Messages extends Component {
         >
           {msgs.map(msg =>
             <li
-              className="msg-container"
+              className={`msg-container ${from === msg.from ? 'own' : ''}`}
               key={msg.id}
             >
               <div className="msg-info">
@@ -62,8 +62,8 @@ class Messages extends Component {
                   className="msg-date"
                 >{(new Date(msg.time)).toLocaleString()}</div>
               </div>
-              <div className="msg-text"
-              >{msg.message}</div>
+              <p className="msg-text"
+              >{msg.message}</p>
             </li>
           )}
         </ul>

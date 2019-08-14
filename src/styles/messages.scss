@@ -1,5 +1,5 @@
 ul.messages {
-    max-height: 80vh;
+    max-height: 75vh;
     overflow-y: scroll;
     overflow-x: hidden;
     background-color: white;
@@ -9,22 +9,32 @@ ul.messages {
         flex-direction: column;
         border-bottom: 1px solid black;
 
+        &.own {
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
         .msg-info {
             display: flex;
+            justify-content: flex-end;
             
             .msg-author,
             .msg-date {
                 max-width: 50%;
+                margin: 0 6px;
                 overflow: hidden;
+                font-size: 1rem;
             }
+
+        }
+
+        .msg-text {
+            font-size: 1.4rem;
+            word-wrap: break-word;
         }
     }
 
     .msg-container:last-child {
         border-bottom: hidden;
-    }
-
-    .msg-text {
-        word-wrap: break-word
     }
 }

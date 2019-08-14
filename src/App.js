@@ -167,6 +167,7 @@ class App extends Component {
         />
         <Body
           wsStatus={wsStatus}
+          from={from}
           msgs={msgs}
           scrollTop={scrollTop}
           scrolling={this.handleScroll}
