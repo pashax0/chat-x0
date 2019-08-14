@@ -1,10 +1,10 @@
 import React from 'react';
 
 import MessageForm from './MessageForm';
-import LoginForm from './LoginForm';
+import LoginButton from './LoginButton';
 
 function Foot(props) {
-  const { onLogin, from, ws, onSendMsg } = props;
+  const { onLogin, from, onSendMsg } = props;
 
   return (
     <footer>
@@ -12,9 +12,14 @@ function Foot(props) {
           onSendMsg={onSendMsg}
           from={from}
         />
-        : <LoginForm
-          onLogin={onLogin}
-        />
+        : <div
+          className="login-attent"
+        >
+          <h1>For commenting, please, login!</h1>
+          <LoginButton
+            onLogin={onLogin}
+          />
+        </div>
       }
       <small className="copyright">© pashax0 {new Date().getFullYear()}</small>
     </footer>

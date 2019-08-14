@@ -1,0 +1,46 @@
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .login-form {
+        position: relative;
+        min-width: 50%;
+        max-width: 200px;
+        min-height: 50%;
+        padding: 3px;
+        color: white;
+        background-color: black;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            margin-top: 1rem;
+
+            label {
+                &>* {
+                    vertical-align: baseline;
+                }
+            }
+
+            input[type="text"] {
+                width: 100%;
+            }
+
+            input[type="submit"] {
+                position: absolute;
+                bottom: 3px;
+                right: 3px;
+                min-width: 50%;
+                border: none;
+                background-color: white;
+                cursor: pointer;
+            }
+        }
+    }
+}

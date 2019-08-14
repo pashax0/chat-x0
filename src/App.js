@@ -118,10 +118,10 @@ class App extends Component {
     })
   }
 
-  handleLogin = () => {
-    localStorage.setItem('from', 'me');
+  handleLogin = (name) => {
+    localStorage.setItem('from', name);
     this.setState({
-      from: 'me',
+      from: name,
     })
   }
 
@@ -176,6 +176,7 @@ class App extends Component {
           from={from}
           onSendMsg={this.handleSendMsg}
         />
+        
       </>
     );
   }

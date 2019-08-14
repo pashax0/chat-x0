@@ -1,5 +1,7 @@
 import React from 'react';
 
+import LoginButton from './LoginButton';
+
 function Head(props) {
   const { wsStatus, from, onLogout, onLogin } = props;
   const user = from ? from.toUpperCase() : 'Stranger';
@@ -8,7 +10,9 @@ function Head(props) {
       <h1>{user}, welcome to chat</h1>
       <p>{wsStatus}</p>
       {from ? <button onClick={() => onLogout()}>logout</button>
-      :<button onClick={() => onLogin()}>login</button>}
+      : <LoginButton
+        onLogin={onLogin}
+      />}
     </header>
   )
 }
