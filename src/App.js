@@ -24,12 +24,13 @@ class App extends Component {
       from: from,
       msgs: msgsInStorage,
       scrollTop: 500,
+      msgTempl: '',
     }
   }
 
   componentDidMount() {
-    this.handlerInternetStatus();
-    this.handlerWindowStatus();
+    this.handleInternetStatus();
+    this.handleWindowStatus();
     this.connectWs();
   }
 
@@ -47,13 +48,13 @@ class App extends Component {
     }
   }
 
-  handlerInternetStatus() {
+  handleInternetStatus() {
     this.setState({online: navigator.onLine,})
     window.addEventListener("offline", () => this.setState({online: false, wsStatus: 'offline'}))
     window.addEventListener("online", () => this.setState({online: true,}))
   }
 
-  handlerWindowStatus() {
+  handleWindowStatus() {
     window.addEventListener("focus", () => (
       this.setState({
         isActiveWindow: true,
@@ -132,7 +133,8 @@ class App extends Component {
     })
   }
 
-  handleSendMsg = (text) => {
+  handleSendMsg = () => {
+    const text = this.state.msgTempl;
     if (this.state.wsStatus === 1) {
       const msg = {
         from: this.state.from,
@@ -144,6 +146,24 @@ class App extends Component {
       localMsgs.push(text);
       localStorage.setItem('msgs', JSON.stringify(localMsgs));
     }
+    this.setState({
+      msgTempl: '',
+    })
+  }
+
+  handleAddToMsgFor = (to) => {
+    this.setState((state) => {
+      const msgFor = state.msgTempl.concat(`@${to} `);
+      return {
+        msgTempl: msgFor,
+      }
+    })
+  }
+
+  handleAddToMsgText = (text) => {
+    this.setState({
+      msgTempl: text,
+    })
   }
 
   // handleGetMsg = (msg) => {
@@ -156,11 +176,10 @@ class App extends Component {
   // }
 
   render() {
-    const { wsStatus, from, msgs, scrollTop } = this.state;
+    const { wsStatus, from, msgs, scrollTop, msgTempl } = this.state;
     return (
       <>
         <Head
-          wsStatus={wsStatus}
           from={from}
           onLogout={this.handleLogout}
           onLogin={this.handleLogin}
@@ -171,11 +190,14 @@ class App extends Component {
           msgs={msgs}
           scrollTop={scrollTop}
           scrolling={this.handleScroll}
+          addToMsg={this.handleAddToMsgFor}
         />
         <Foot
           onLogin={this.handleLogin}
           from={from}
+          msgTempl={msgTempl}
           onSendMsg={this.handleSendMsg}
+          addToMsg={this.handleAddToMsgText}
         />
         
       </>

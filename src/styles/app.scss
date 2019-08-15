@@ -1,3 +1,5 @@
+$gap: 3px;
+
 * {
     box-sizing: border-box;
     outline: none;
@@ -23,6 +25,7 @@ html, body {
 
     header {
         min-height: 10vh;
+        padding: $gap;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -33,6 +36,7 @@ html, body {
     }
 
     main {
+        // padding: $gap;
         flex: 1 0 auto;
         // display: flex;
         // justify-content: stretch;
@@ -50,10 +54,16 @@ html, body {
             justify-content: center;
             align-items: center;
         }
+
+        .error {
+            color: white;
+            background-color: black;
+        }
     }
 
     footer {
         min-height: 15vh;
+        padding: $gap;
         flex-shrink: 0;
         display: flex;
         flex-direction: column;
@@ -68,13 +78,43 @@ html, body {
         }
 
         .copyright {
+            padding: $gap;
             text-align: center;
         }
     }
+
+    button,
+    input[type="submit"] {
+        padding: $gap;
+        color: white;
+        background-color: black;
+        border: none;
+        cursor: pointer;
+    }
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+    background: #fff; 
+}
 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: black; 
+}
 
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
 
-
+@media only screen and (max-width: 600px) {
+    ::-webkit-scrollbar {
+        display: none;
+     }
+}

@@ -10,4 +10,6 @@ label {
 textarea[type='text'] {
     flex-grow: 1;
     color: brown;
+    font-size: 1.2rem;
+    border: 1px solid black;
 }

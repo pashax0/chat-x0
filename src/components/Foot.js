@@ -4,13 +4,15 @@ import MessageForm from './MessageForm';
 import LoginButton from './LoginButton';
 
 function Foot(props) {
-  const { onLogin, from, onSendMsg } = props;
+  const { onLogin, from, onSendMsg, msgTempl, addToMsg } = props;
 
   return (
     <footer>
       {from ? <MessageForm
           onSendMsg={onSendMsg}
           from={from}
+          msgTempl={msgTempl}
+          addToMsg={addToMsg}
         />
         : <div
           className="login-attent"

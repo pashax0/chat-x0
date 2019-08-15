@@ -1,3 +1,5 @@
+$gap: 3px;
+
 ul.messages {
     max-height: 75vh;
     overflow-y: scroll;
@@ -5,32 +7,68 @@ ul.messages {
     background-color: white;
 
     .msg-container {
+        padding: 3px;
         display: flex;
         flex-direction: column;
         border-bottom: 1px solid black;
 
         &.own {
-            color: white;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.2);
         }
 
         .msg-info {
             display: flex;
             justify-content: flex-end;
+            align-items: baseline;
             
             .msg-author,
             .msg-date {
+                position: relative;
                 max-width: 50%;
                 margin: 0 6px;
-                overflow: hidden;
+                // overflow: hidden;
                 font-size: 1rem;
             }
 
+            .msg-date {
+                font-size: 0.6rem;
+            }
+
+            .popover {
+                visibility: hidden;;
+                position: absolute;
+                top: -3px;
+                right: -3px;
+                width: 120px;
+                height: 40px;
+                padding: $gap;
+                color: white;
+                background-color: black;
+                // display: none;
+                box-shadow: none;
+                cursor: pointer;
+                // transition-delay: 2s;
+            }
+            
+            .msg-author:hover {
+                cursor: pointer;
+                transition-delay: 2s;
+                .popover {
+                    visibility: visible;
+                }
+            }
         }
 
         .msg-text {
             font-size: 1.4rem;
             word-wrap: break-word;
+
+            .ext-link {
+                padding: $gap;
+                text-decoration: none;
+                color: white;
+                background-color: black;
+            }
         }
     }
 
