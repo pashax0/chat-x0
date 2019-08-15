@@ -10,7 +10,6 @@ class Messages extends Component {
 
     this.state = {
       showLoader: false,
-      isActiveWindow: true,
       anchorEl: null,
       posFromTop: posFromTop,
       // msgs: [],
@@ -48,7 +47,7 @@ class Messages extends Component {
     const { msgs } = this.props;
     if (Notification.permission === 'granted'
       && prevProps.msgs.length !== msgs.length
-      && !this.state.isActiveWindow) {
+      && !this.props.isActiveWindow) {
       const notifText = msgs[msgs.length - 1].message;
       new Notification('Chat-x0',{body: notifText});
     }

@@ -11,18 +11,14 @@ class App extends Component {
   constructor(props){
     super(props);
     // localStorage.clear();
-    let msgsInStorage = [];
     const from = localStorage.getItem('from') ? localStorage.getItem('from') : false;
-    if (localStorage.getItem('msgs')) {
-      msgsInStorage = localStorage.getItem('msgs');
-    }
     
     this.state = {
       online: null,
       isActiveWindow: true,
       wsStatus: null,
       from: from,
-      msgs: msgsInStorage,
+      msgs: null,
       scrollTop: 500,
       msgTempl: '',
     }
@@ -71,21 +67,19 @@ class App extends Component {
     this.ws = new WebSocket('wss://wssproxy.herokuapp.com/');
     
     this.ws.onopen = () => {
-      console.log(`onopen - ${this.ws.readyState}`);
       this.setState({
         wsStatus: this.ws.readyState,
       })
     };
 
     this.ws.onerror = () => {
-      console.log(`onerror - ${this.ws.readyState}`);
+      console.log(`Connection error`);
     };
 
     this.ws.onclose = (ev) => {
       this.setState({
         wsStatus: ev.code,
       })
-      console.log(`onclose ${ev.code} - ${this.ws.readyState}`);
     };
 
     this.ws.onmessage = (msg) => {
@@ -105,7 +99,9 @@ class App extends Component {
       if (Notification.permission === 'default') {
         Notification.requestPermission()
           .then(result => {
-            result === 'granted' ? alert(`Thank, you!`) : alert('If you change your mind, please - click this button!');
+            result === 'granted'
+            ? alert(`Thank, you!`)
+            : alert('If you change your mind, please - click this button!');
           })
       }
     }
@@ -176,7 +172,7 @@ class App extends Component {
   // }
 
   render() {
-    const { wsStatus, from, msgs, scrollTop, msgTempl } = this.state;
+    const { isActiveWindow, wsStatus, from, msgs, scrollTop, msgTempl } = this.state;
     return (
       <>
         <Head
@@ -185,6 +181,7 @@ class App extends Component {
           onLogin={this.handleLogin}
         />
         <Body
+          isActiveWindow={isActiveWindow}
           wsStatus={wsStatus}
           from={from}
           msgs={msgs}
