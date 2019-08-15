@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/chat-x0/static/css/main.019328df.chunk.css",
-    "main.js": "/chat-x0/static/js/main.51d4328a.chunk.js",
-    "main.js.map": "/chat-x0/static/js/main.51d4328a.chunk.js.map",
-    "runtime~main.js": "/chat-x0/static/js/runtime~main.29ffbe0a.js",
-    "runtime~main.js.map": "/chat-x0/static/js/runtime~main.29ffbe0a.js.map",
+    "main.css": "/chat-x0/static/css/main.a8f9bbad.chunk.css",
+    "main.js": "/chat-x0/static/js/main.325a59ef.chunk.js",
+    "main.js.map": "/chat-x0/static/js/main.325a59ef.chunk.js.map",
+    "runtime~main.js": "/chat-x0/static/js/runtime~main.ff88e370.js",
+    "runtime~main.js.map": "/chat-x0/static/js/runtime~main.ff88e370.js.map",
     "static/css/2.21795a30.chunk.css": "/chat-x0/static/css/2.21795a30.chunk.css",
     "static/js/2.8f8d0102.chunk.js": "/chat-x0/static/js/2.8f8d0102.chunk.js",
     "static/js/2.8f8d0102.chunk.js.map": "/chat-x0/static/js/2.8f8d0102.chunk.js.map",
-    "static/css/3.b087c548.chunk.css": "/chat-x0/static/css/3.b087c548.chunk.css",
-    "static/js/3.63891c91.chunk.js": "/chat-x0/static/js/3.63891c91.chunk.js",
-    "static/js/3.63891c91.chunk.js.map": "/chat-x0/static/js/3.63891c91.chunk.js.map",
+    "static/css/3.c83e8585.chunk.css": "/chat-x0/static/css/3.c83e8585.chunk.css",
+    "static/js/3.33febc9c.chunk.js": "/chat-x0/static/js/3.33febc9c.chunk.js",
+    "static/js/3.33febc9c.chunk.js.map": "/chat-x0/static/js/3.33febc9c.chunk.js.map",
     "index.html": "/chat-x0/index.html",
-    "precache-manifest.087ec6be1551a8c640329a821107dd19.js": "/chat-x0/precache-manifest.087ec6be1551a8c640329a821107dd19.js",
+    "precache-manifest.fae822e1f4d40840dc4dda448e17890e.js": "/chat-x0/precache-manifest.fae822e1f4d40840dc4dda448e17890e.js",
     "service-worker.js": "/chat-x0/service-worker.js",
     "static/css/2.21795a30.chunk.css.map": "/chat-x0/static/css/2.21795a30.chunk.css.map",
-    "static/css/3.b087c548.chunk.css.map": "/chat-x0/static/css/3.b087c548.chunk.css.map",
-    "static/css/main.019328df.chunk.css.map": "/chat-x0/static/css/main.019328df.chunk.css.map"
+    "static/css/3.c83e8585.chunk.css.map": "/chat-x0/static/css/3.c83e8585.chunk.css.map",
+    "static/css/main.a8f9bbad.chunk.css.map": "/chat-x0/static/css/main.a8f9bbad.chunk.css.map"
   }
 }
